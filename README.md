@@ -34,9 +34,9 @@ The application defaults to `eu-west-1` but this can be overridden using `AWS_DE
 
 `aws_log_cleaner -h`
 
-* Run the plan command in eu-west-1 where prefix like channel.
+* Run the plan command in eu-west-1 where prefix like some_text.
 
-`aws_log_cleaner -p -l 'some_text'`
+`aws_log_cleaner -p -l 'some_text' -r 'eu-west-1' -k [ACCESS_KEY] -s [SECRET]` 
 
 ## Code 
 
