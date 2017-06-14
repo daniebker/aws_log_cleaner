@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+require 'aws_log_cleaner'
+require 'colorize'
+
+USAGE = <<ENDUSAGE.freeze
+  Usage:
+    aws_log_cleaner [-h] ([-p] or [-a]) [-r region] [-l like]
+ENDUSAGE
+
+HELP = <<ENDHELP.freeze
+   -h, --help       Show this help.
+   -p, --plan       Runs the plan command.
+   -a, --apply      Applys the deletion. Preview what will be deleted with [-p]
+   -l, --like       The search term returned logs should contain.
+   -r, --region     The region to run in.
+   -k, --access_key The access key to use for AWS.
+   -s, --secret     The secret to use for AWS.
+ENDHELP
+
+args = { region: nil, access_key: nil, secret: nil }
+unflagged_args = []
+next_arg = unflagged_args.first
+ARGV.each do |arg|
+  case arg
+  when '-h', '--help'       then args[:help]      = true
+  when '-p', '--plan'       then args[:plan]      = true
+  when '-a', '--apply'      then args[:delete]    = true
+  when '-l', '--like'       then next_arg         = :like
+  when '-r', '--region'     then next_arg         = :region
+  when '-k', '--access_key' then next_arg         = :access_key
+  when '-s', '--secret'     then next_arg         = :secret
+  else
+    if next_arg
+      args[next_arg] = arg
+      unflagged_args.delete(next_arg)
+    end
+    next_arg = unflagged_args.first
+  end
+end
+
+if args[:help] || (!args[:plan] && !args[:delete])
+  puts USAGE
+  puts HELP
+  exit
+end
+
+like = args[:like].nil? ? '' : args[:like]
+
+log_cleaner = \
+  AwsLogCleaner::AwsLogCleaner.new(args[:access_key], args[:secret], args[:region])
+
+if args[:plan]
+  puts "== PLAN MODE ==\n\n"
+
+  result = log_cleaner.plan(like)
+
+  puts "Found #{result.count} item(s) to remove\n\n"
+elsif args[:delete] && !args[:plan]
+  puts "== DELETE MODE ==\n\n"
+
+  result = log_cleaner.delete(like)
+
+  puts "Deleted #{result.count} item(s)\n\n"
+end
+
+result.each do |item|
+  puts item.to_s.red
+end
