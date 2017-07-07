@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    aws_log_cleaner (0.1.3)
+      aws-sdk (~> 2.9.25)
+      colorize (~> 0.8.1)
+
 GEM
   remote: https://rubygems.org/
   remote: http://vbuartifactory.vistaprint.svc/artifactory/api/gems/gems-release-local/
@@ -7,16 +14,20 @@ GEM
       artifactory (~> 2.2.0)
       vp_rake_core (~> 0.9.44)
     asciidoctor (0.1.4)
-    aws-sdk (2.9.25)
-      aws-sdk-resources (= 2.9.25)
-    aws-sdk-core (2.9.25)
+    aws-sdk (2.9.44)
+      aws-sdk-resources (= 2.9.44)
+    aws-sdk-core (2.9.44)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.25)
-      aws-sdk-core (= 2.9.25)
+    aws-sdk-resources (2.9.44)
+      aws-sdk-core (= 2.9.44)
     aws-sigv4 (1.0.0)
     colorize (0.8.1)
     diff-lcs (1.3)
+    facter (2.4.6-x64-mingw32)
+      ffi (~> 1.9.5)
+      win32-dir (~> 0.4.8)
+      win32-security (~> 0.2.5)
     facter (2.4.6-x86-mingw32)
       ffi (~> 1.9.5)
       win32-dir (~> 0.4.8)
@@ -27,6 +38,7 @@ GEM
     faraday_middleware (0.10.1)
       faraday (>= 0.7.4, < 1.0)
     fast_gettext (1.1.0)
+    ffi (1.9.18-x64-mingw32)
     ffi (1.9.18-x86-mingw32)
     ffi-win32-extensions (1.0.3)
       ffi
@@ -51,6 +63,17 @@ GEM
     minitar (0.5.4)
     multi_json (1.12.1)
     multipart-post (2.0.0)
+    puppet (3.7.5-x64-mingw32)
+      facter (> 1.6, < 3)
+      ffi (~> 1.9.5)
+      hiera (~> 1.0)
+      json_pure
+      minitar (~> 0.5.4)
+      win32-dir (~> 0.4.9)
+      win32-eventlog (~> 0.6.1)
+      win32-process (~> 0.7.4)
+      win32-security (~> 0.2.5)
+      win32-service (~> 0.8.6)
     puppet (3.7.5-x86-mingw32)
       facter (> 1.6, < 3)
       ffi (~> 1.9.5)
@@ -69,7 +92,7 @@ GEM
       gettext-setup (~> 0.11)
       minitar
       semantic_puppet (~> 0.1.0)
-    rake (12.0.0)
+    rake (10.5.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
       rspec-expectations (~> 3.6.0)
@@ -125,13 +148,15 @@ GEM
     win32console (1.3.2-x86-mingw32)
 
 PLATFORMS
+  x64-mingw32
   x86-mingw32
 
 DEPENDENCIES
-  aws-sdk (~> 2.9.25)
-  colorize (~> 0.8.1)
-  rspec
+  aws_log_cleaner!
+  bundler (~> 1.13)
+  rake (~> 10.0)
+  rspec (~> 3.6.0)
   vp_devkit_dotnet
 
 BUNDLED WITH
-   1.13.6
+   1.15.1

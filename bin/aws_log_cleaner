@@ -45,14 +45,14 @@ if args[:help] || (!args[:plan] && !args[:delete])
   exit
 end
 
-like = args[:like].nil? ? '' : args[:like]
+like = args[:like].nil? ? '' : args[:like].downcase
 
 log_cleaner = \
   AwsLogCleaner::AwsLogCleaner.new(args[:access_key], args[:secret], args[:region])
 
 if args[:plan]
   puts "== PLAN MODE ==\n\n"
-
+  
   result = log_cleaner.plan(like)
 
   puts "Found #{result.count} item(s) to remove\n\n"
