@@ -1,0 +1,16 @@
+sudo: false
+language: ruby
+rvm:
+- 2.1.6
+before_install: gem install bundler -v 1.14.6
+os:
+- linux
+- osx
+deploy:
+  provider: rubygems
+  api_key:
+    secure: MkzFSS1N531sgP+f8MCDHbpXMUUaM/4was8tGW7yaSbfs5B0M/DK4jHEWT0jHS5RoXZcKldr5elx200Wz6IlqFP+9XWPTd14HWTn+XZn53yrvoJhO/b2bxRK5905RjrLaXoC4yzWK9v+ILTumVsHWefAwGq2SBlK0CsFWNHQEwP2T9hN3QRovGyopLoGRR++TgL8jw8TNE70O/QjX7JACRy/CUUKQE4XqAYUsq3BuHe7Vur+1KMN00++ja8THPLUcVR+Paf/qHhCTyIIMkpOJ81GIPgEuRFPH4hGhooRZlTcizp0fl7WXqNJGVhl7sVsG00ExFp51fxaG/ZH5Ho5St9GyXuWp7QQfXnCsNp3tWrPs7/tWQZiqJWhOk7XoHPd9I/gSJj24fxi935EkDaNc8XrFh9Rw1kC9rhSaquY+gNuE9iMARgE3p2YWEVTvmrjSXFPONC0fc7iIXkixJt6URVShrU4gZyT5UC0VcmaC/f6Oo0fBkeVs2d8jTx5I/hP1UTeRIjZPEaFLf/mhbbQ502nWRj1MYHVC7PKQWyerkch82ckkEj25w+Xw82sz0Ac99/9tzEIw7Q0Ex6Xi2GaqhTmzvIdo3GViv8Ehj8xw0kh4TqPNvyNdKV89eIoRy2oL3tnq9oLLEVEF2nfGqRjAbrqI06aFSVJyylDGzEg1HA=
+  gem: aws_log_cleaner
+  on:
+    tags: true
+    repo: daniebker/aws_log_cleaner

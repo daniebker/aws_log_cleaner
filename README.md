@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner)
+
 # AwsLogCleaner
 
 A gem to clean up aws lambda and Api Gateway log groups that contain a search term.

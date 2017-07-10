@@ -1,6 +1,5 @@
 
 require 'bundler/gem_tasks'
-require 'vp_devkit_dotnet'
 
 require_relative 'lib/aws_log_cleaner'
 
