@@ -9,8 +9,21 @@ module AwsLogCleaner
 
     attr_reader :credentials, :region
 
-    def initialize(credential_args = nil)
-      
+    def initialize(credential_args = nil)      
+      key_id, secret, profile = parse_credential_arguments(credential_args)
+
+      set_credentials(key_id, secret, profile)
+
+      return @credentials
+    end
+
+    private
+
+    def raise_credentials_error
+      raise "Could not load credentials."
+    end
+
+    def parse_credential_arguments(credential_args)
       if credential_args.nil?
         key_id  = ENV['AWS_ACCESS_KEY_ID']
         secret  = ENV['AWS_SECRET_ACCESS_KEY']
@@ -29,7 +42,10 @@ module AwsLogCleaner
         end        
         @region = credential_args[:region] || ENV['AWS_DEFAULT_REGION']
       end
+      return key_id, secret, profile
+    end
 
+    def set_credentials(key_id, secret, profile)
       @credentials =
         if key_id.nil? && secret.nil?
           begin
@@ -44,14 +60,6 @@ module AwsLogCleaner
         if @credentials.nil? || @region.nil?
           raise_credentials_error
         end
-
-        return @credentials
-    end
-
-    private
-
-    def raise_credentials_error
-      raise "Could not load credentials."
     end
     
   end
