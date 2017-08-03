@@ -4,8 +4,6 @@ rvm:
   - 2.1.6
 before_install: 
   - gem install bundler -v 1.14.6
-  - pip install --user awscli
-  - export PATH=$PATH:$HOME/.local/bin
 os:
   - linux
   - osx
