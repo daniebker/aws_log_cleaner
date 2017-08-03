@@ -9,14 +9,30 @@ module AwsLogCleaner
 
     attr_reader :credentials, :region
 
-    def initialize(access_key = nil, secret = nil, region = nil)
-      key_id = access_key || ENV['AWS_ACCESS_KEY_ID']
-      secret = secret || ENV['AWS_SECRET_ACCESS_KEY']
-      @region = region || ENV['AWS_DEFAULT_REGION']
+    def initialize(credential_args = nil)
+      
+      if credential_args.nil?
+        key_id  = ENV['AWS_ACCESS_KEY_ID']
+        secret  = ENV['AWS_SECRET_ACCESS_KEY']
+        @region = ENV['AWS_DEFAULT_REGION']
+      else
+        if credential_args[:profile] \
+          && (credential_args[:access_key] || credential_args[:secret] )
+          raise "Cannot pass a profile and a secret"
+        end
+
+        if credential_args[:profile]
+          profile = credential_args[:profile]
+        else
+          key_id = credential_args[:access_key]
+          secret = credential_args[:secret]
+        end        
+        @region = credential_args[:region] || ENV['AWS_DEFAULT_REGION']
+      end
 
       @credentials =
         if key_id.nil? && secret.nil?
-          Aws::SharedCredentials.new
+          profile.nil? ? Aws::SharedCredentials.new : Aws::SharedCredentials.new(profile_name: profile)
         else
           Aws::Credentials.new(key_id, secret)
         end
