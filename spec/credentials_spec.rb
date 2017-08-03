@@ -12,7 +12,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
   before(:each) do
     ENV['AWS_ACCESS_KEY_ID'] = environment_access_key
     ENV['AWS_SECRET_ACCESS_KEY'] = environment_secret
-    ENV['AWS_DEFAULT_REGION'] = environment_region
+    ENV['AWS_REGION'] = environment_region
   end
 
   it 'should use input credentials as priority' do
@@ -41,7 +41,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
       .to eql(environment_region)
   end
 
-  it "should use a profile over env variables" do
+  it 'should use a profile over env variables' do
     expect { 
       AwsLogCleaner::AwsCredentials.new(
         :profile => profile
@@ -49,7 +49,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
     }.to raise_error(/Could not load credentials/)
   end
 
-  it "should use a default profile as a last resort" do
+  it 'should use a default profile as a last resort' do
     ENV['AWS_ACCESS_KEY_ID'] = nil
     ENV['AWS_SECRET_ACCESS_KEY'] = nil
   
@@ -58,7 +58,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
     }.to raise_error(/Could not load credentials/)
   end
 
-  it "should throw an exception when a secret and a profile are passed" do
+  it 'should throw an exception when a secret and a profile are passed' do
     expect { 
       aws_credentials = AwsLogCleaner::AwsCredentials.new(
         :access_key => constructor_access_key,
@@ -67,5 +67,15 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
         :profile => profile
       )
     }.to raise_error("Cannot pass a profile and a secret")
+  end
+
+  it 'should not set credentials when access_key or secret are empty' do
+    expect { 
+     AwsLogCleaner::AwsCredentials.new(
+        :access_key => '',
+        :secret => '',
+        :region => constructor_region
+      )
+    }.to raise_error(/Could not load credentials/)
   end
 end
