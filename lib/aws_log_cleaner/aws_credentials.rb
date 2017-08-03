@@ -32,10 +32,27 @@ module AwsLogCleaner
 
       @credentials =
         if key_id.nil? && secret.nil?
-          profile.nil? ? Aws::SharedCredentials.new : Aws::SharedCredentials.new(profile_name: profile)
+          begin
+            profile.nil? ? Aws::SharedCredentials.new : Aws::SharedCredentials.new(profile_name: profile)
+          rescue Aws::Errors::NoSuchProfileError
+            raise_credentials_error
+          end
         else
           Aws::Credentials.new(key_id, secret)
         end
+
+        if @credentials.nil? || @region.nil?
+          raise_credentials_error
+        end
+
+        return @credentials
     end
+
+    private
+
+    def raise_credentials_error
+      raise "Could not load credentials."
+    end
+    
   end
 end

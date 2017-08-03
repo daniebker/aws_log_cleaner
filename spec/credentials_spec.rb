@@ -46,7 +46,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
       AwsLogCleaner::AwsCredentials.new(
         :profile => profile
       )
-    }.to raise_error(/Profile `profile' not found/)
+    }.to raise_error(/Could not load credentials/)
   end
 
   it "should use a default profile as a last resort" do
@@ -55,7 +55,7 @@ RSpec.describe AwsLogCleaner::AwsCredentials do
   
     expect { 
       AwsLogCleaner::AwsCredentials.new
-    }.to raise_error(/Profile `default' not found/)
+    }.to raise_error(/Could not load credentials/)
   end
 
   it "should throw an exception when a secret and a profile are passed" do
