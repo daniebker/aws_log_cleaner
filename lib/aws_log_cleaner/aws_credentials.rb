@@ -41,7 +41,7 @@ module AwsLogCleaner
           secret = credential_args[:secret]
         end        
         @region = credential_args[:region] || ENV['AWS_DEFAULT_REGION']
-      end
+      end 
       return key_id, secret, profile
     end
 
@@ -57,7 +57,7 @@ module AwsLogCleaner
           Aws::Credentials.new(key_id, secret)
         end
 
-        if @credentials.nil? || @region.nil?
+        if @credentials.credentials.nil? || @region.nil?
           raise_credentials_error
         end
     end
