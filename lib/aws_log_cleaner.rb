@@ -12,8 +12,8 @@ module AwsLogCleaner
   # Application wrapper
   class AwsLogCleaner
 
-    def initialize(access_key = nil, secret = nil, region = nil)
-      credentials = AwsCredentials.new(access_key, secret, region)
+    def initialize(credentials_args)
+      credentials = AwsCredentials.new(credentials_args)
       cloud_watch_logs = CloudWatchLogs.new(credentials)
       api_gateway = ApiGateway.new(credentials)
 

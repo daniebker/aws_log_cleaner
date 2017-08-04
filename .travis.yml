@@ -1,11 +1,12 @@
 sudo: false
 language: ruby
 rvm:
-- 2.1.6
-before_install: gem install bundler -v 1.14.6
+  - 2.1.6
+before_install: 
+  - gem install bundler -v 1.14.6
 os:
-- linux
-- osx
+  - linux
+  - osx
 deploy:
   provider: rubygems
   api_key:
