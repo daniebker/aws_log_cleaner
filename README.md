@@ -28,7 +28,7 @@ Or install it yourself as:
 OR
 * A credentials file must be present in  `~\.aws`
 
-The application defaults to `eu-west-1` but this can be overridden using `AWS_DEFAULT_REGION` environment variable.
+The application defaults to `eu-west-1` but this can be overridden using `AWS_REGION` environment variable, or by passing -r [--region] on the commandline.
 
 ### From the command line
 
