@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner)
+[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner) [![Gem Version](https://badge.fury.io/rb/aws_log_cleaner.svg)](https://badge.fury.io/rb/aws_log_cleaner)
 
 # AwsLogCleaner
 
