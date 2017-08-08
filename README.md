@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner) [![Gem Version](https://badge.fury.io/rb/aws_log_cleaner.svg)](https://badge.fury.io/rb/aws_log_cleaner)
+[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner) [![Build status](https://ci.appveyor.com/api/projects/status/0rn4dqa7wyr3cqh9?svg=true)](https://ci.appveyor.com/project/daniebker/aws-log-cleaner) [![Gem Version](https://badge.fury.io/rb/aws_log_cleaner.svg)](https://badge.fury.io/rb/aws_log_cleaner) 
 
 # AwsLogCleaner
 
