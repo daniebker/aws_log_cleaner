@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner)
+[![Build Status](https://travis-ci.org/daniebker/aws_log_cleaner.svg?branch=master)](https://travis-ci.org/daniebker/aws_log_cleaner) [![Gem Version](https://badge.fury.io/rb/aws_log_cleaner.svg)](https://badge.fury.io/rb/aws_log_cleaner)
 
 # AwsLogCleaner
 
@@ -26,33 +26,39 @@ Or install it yourself as:
 
 * `AWS_SECRET_KEY` & `AWS_ACCESS_KEY` env variables must be set.  
 OR
-* A credentials file must be present in  `~\.aws`
+* A credentials file must be present in  `~\.aws`   
 
-The application defaults to `eu-west-1` but this can be overridden using `AWS_DEFAULT_REGION` environment variable.
+The application defaults to `eu-west-1` but this can be overridden using `AWS_REGION` environment variable, or by passing -r [--region] on the commandline.
 
 ### From the command line
 
-* Get help by using:
+Get help by using:
 
-`aws_log_cleaner -h`
+    $ aws_log_cleaner -h
 
-* Run the plan command in eu-west-1 where prefix like some_text.
+Run the plan command in eu-west-1 where prefix like some_text.
 
-`aws_log_cleaner -p -l 'some_text' -r 'eu-west-1' -k [ACCESS_KEY] -s [SECRET]` 
+    $ aws_log_cleaner -p -l 'some_text' -r 'eu-west-1' -k [ACCESS_KEY] -s [SECRET]
 
 ## Code 
 
 Initialise a new LogCleaner 
 
-`log_cleaner = AwsLogCleaner::AwsLogCleaner.new`
+```ruby
+log_cleaner = AwsLogCleaner::AwsLogCleaner.new
+```
 
 Run a plan
 
-`log_cleaner.plan('some_text')`
+```ruby
+log_cleaner.plan('some_text')
+```
 
 Or run a delete 
 
-`log_cleaner.delete('some_text')`
+```ruby
+log_cleaner.delete('some_text')
+```
 
 ## Development
 
