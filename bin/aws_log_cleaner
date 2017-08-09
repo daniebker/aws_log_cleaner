@@ -5,7 +5,7 @@ require 'colorize'
 
 USAGE = <<ENDUSAGE.freeze
   Usage:
-    aws_log_cleaner [-h] ([-p] or [-a]) [-r region] [-l like]
+    aws_log_cleaner [-h] ([-p] or [-a]) [-o] [-r region] [-l like]
 ENDUSAGE
 
 HELP = <<ENDHELP.freeze
@@ -17,6 +17,8 @@ HELP = <<ENDHELP.freeze
    -k,  --access_key The access key to use for AWS.
    -s,  --secret     The secret to use for AWS.
    -P,  --profile    The profile to use for AWS Credentials.
+   -o,  --orphan     Clean orphan logs.
+   -v,  --version    Print version.
 ENDHELP
 
 args = { region: nil, access_key: nil, secret: nil }
@@ -27,6 +29,8 @@ ARGV.each do |arg|
   when '-h', '--help'       then args[:help]      = true
   when '-p', '--plan'       then args[:plan]      = true
   when '-a', '--apply'      then args[:delete]    = true
+  when '-o', '--orphan'     then args[:orphan]    = true
+  when '-v', '--version'    then args[:version]   = true
   when '-l', '--like'       then next_arg         = :like
   when '-r', '--region'     then next_arg         = :region
   when '-k', '--access_key' then next_arg         = :access_key
@@ -41,15 +45,18 @@ ARGV.each do |arg|
   end
 end
 
+if args[:version]
+  puts AwsLogCleaner::VERSION
+  exit
+end
+
 if args[:help] || (!args[:plan] && !args[:delete])
   puts USAGE
   puts HELP
   exit
 end
 
-like = args[:like].nil? ? '' : args[:like].downcase
-
-credentials_args = 
+credentials_args =
   if args[:access_key] && args[:secret]
     {
       access_key: args[:access_key],
@@ -59,26 +66,20 @@ credentials_args =
     {
       profile: args[:profile]
     }
-  else 
-    nil
   end
 
-credentials_args[:region] = args[:region] unless args[:region].nil? 
+credentials_args[:region] = args[:region] unless args[:region].nil?
 
 log_cleaner = \
-  AwsLogCleaner::AwsLogCleaner.new(credentials_args)
+  AwsLogCleaner::AwsLogCleaner.new(credentials_args, args[:like], args[:orphan])
 
 if args[:plan]
   puts "== PLAN MODE ==\n\n"
-  
-  result = log_cleaner.plan(like)
-
+  result = log_cleaner.plan
   puts "Found #{result.count} item(s) to remove\n\n"
 elsif args[:delete] && !args[:plan]
   puts "== DELETE MODE ==\n\n"
-
-  result = log_cleaner.delete(like)
-
+  result = log_cleaner.delete
   puts "Deleted #{result.count} item(s)\n\n"
 end
 

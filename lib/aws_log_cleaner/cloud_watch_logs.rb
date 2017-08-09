@@ -1,10 +1,8 @@
 require 'aws-sdk'
 
 module AwsLogCleaner
-
   # Class responsible for interacting with AWS Cloudwatch
   class CloudWatchLogs
-
     # Required for Windows users.
     Aws.use_bundled_cert!
 
@@ -15,18 +13,9 @@ module AwsLogCleaner
       )
     end
 
-    def list_all_log_groups(token = nil)
-      log_groups = []
-      resp = describe_log_groups(token)
-      log_groups.concat(resp.log_groups)
-
-      if resp.next_token.to_s.empty?
-        log_groups
-      else
-        log_groups.concat(
-            list_all_log_groups(resp.next_token)
-        )
-      end
+    def list_all_log_groups
+      @log_groups = describe_log_groups if @log_groups.nil?
+      @log_groups
     end
 
     def delete_log_groups(log_group_names)
@@ -39,15 +28,15 @@ module AwsLogCleaner
 
     private
 
-    def describe_log_groups(token)
-      if token.nil?
-        @cloud_watch_logs.describe_log_groups
-      else
-        @cloud_watch_logs.describe_log_groups(
-          next_token: token
-        )
+    def describe_log_groups
+      log_groups = []
+      token = nil
+      loop do
+        resp = @cloud_watch_logs.describe_log_groups(next_token: token)
+        log_groups.concat(resp.log_groups)
+        token = resp.next_token
+        return log_groups if token.to_s.empty?
       end
     end
-
   end
 end
