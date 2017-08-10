@@ -3,7 +3,6 @@ require_relative 'builders/log_group_builder'
 require_relative 'builders/api_gateway_builder'
 
 RSpec.describe AwsLogCleaner::ApiGatewayRetriever do
-
   EXPECTED_RESULTS = 3
 
   let(:api_gateway) { instance_double('AwsLogCleaner::ApiGateway') }

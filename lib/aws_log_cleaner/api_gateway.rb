@@ -3,11 +3,8 @@ require 'aws-sdk'
 Aws.use_bundled_cert!
 
 module AwsLogCleaner
-
-  # Class responsible for interacting with the Aws
-  # ApiGatewayClient
+  # Class responsible for interacting with the AWS ApiGatewayClient
   class ApiGateway
-
     def initialize(credentials)
       @api_client = Aws::APIGateway::Client.new(
         region: credentials.region,
@@ -16,6 +13,13 @@ module AwsLogCleaner
     end
 
     def list_all_apis
+      @rest_apis = get_rest_apis if @rest_apis.nil?
+      @rest_apis
+    end
+
+    private
+
+    def get_rest_apis
       Enumerator.new do |enum|
         request = { limit: 25 }
         loop do
@@ -28,6 +32,5 @@ module AwsLogCleaner
         end
       end
     end
-
   end
 end
