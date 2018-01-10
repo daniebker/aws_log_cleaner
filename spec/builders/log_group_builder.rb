@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-cloudwatchlogs'
 
 Aws.use_bundled_cert!
 

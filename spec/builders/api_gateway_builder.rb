@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-apigateway'
 
 Aws.use_bundled_cert!
 
