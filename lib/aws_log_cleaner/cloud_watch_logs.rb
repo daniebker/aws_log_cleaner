@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-cloudwatchlogs'
 
 module AwsLogCleaner
   # Class responsible for interacting with AWS Cloudwatch

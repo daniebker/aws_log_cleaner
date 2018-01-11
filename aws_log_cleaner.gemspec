@@ -26,6 +26,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.6.0'
 
-  spec.add_dependency 'aws-sdk', '~> 3'
+  spec.add_dependency 'aws-sdk-apigateway', '~> 1'
+  spec.add_dependency 'aws-sdk-cloudwatchlogs', '~> 1'
+  spec.add_dependency 'aws-sdk-core', '~> 3'
+
   spec.add_dependency 'colorize', '~> 0.8.1'
 end
